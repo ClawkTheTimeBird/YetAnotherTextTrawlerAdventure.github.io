@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Own Adventure Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .choice {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+  
 <h1>Long Live The Herrscher of Sentience!</h1>
+  
+    <h1>Choose Your Own Adventure [TEST]</h1>
+    <div id="game-text"></div>
+    <div id="choices"></div>
+
+    <script>
+        const gameData = {
+            start: {
+                text: "You are in a dark forest. You can go left or right.",
+                choices: [
+                    { text: "Go left", next: "leftPath" },
+                    { text: "Go right", next: "rightPath" }
+                ]
+            },
+            leftPath: {
+                text: "You see a river. You can swim across or walk along the bank.",
+                choices: [
+                    { text: "Swim across", next: "swim" },
+                    { text: "Walk along the bank", next: "walk" }
+                ]
+            },
+            rightPath: {
+                text: "You encounter a bear. You can run or stay still.",
+                choices: [
+                    { text: "Run", next: "run" },
+                    { text: "Stay still", next: "still" }
+                ]
+            },
+            swim: {
+                text: "You swam across and found a treasure chest. The end.",
+                choices: []
+            },
+            walk: {
+                text: "You walked along the bank and found a village. The end.",
+                choices: []
+            },
+            run: {
+                text: "You ran away safely. The end.",
+                choices: []
+            },
+            still: {
+                text: "The bear lost interest and walked away. The end.",
+                choices: []
+            }
+        };
+
+        const gameTextElement = document.getElementById('game-text');
+        const choicesElement = document.getElementById('choices');
+
+        function startGame() {
+            showScene('start');
+        }
+
+        function showScene(sceneKey) {
+            const scene = gameData[sceneKey];
+            gameTextElement.textContent = scene.text;
+            choicesElement.innerHTML = '';
+            scene.choices.forEach(choice => {
+                const choiceElement = document.createElement('div');
+                choiceElement.className = 'choice';
+                choiceElement.textContent = choice.text;
+                choiceElement.onclick = () => showScene(choice.next);
+                choicesElement.appendChild(choiceElement);
+            });
+        }
+
+        startGame();
+    </script>
+</body>
+</html>
+
